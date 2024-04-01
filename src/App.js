@@ -1,24 +1,33 @@
 import logo from './logo.svg';
 import './App.css';
+import Footer from './compontents/Footer';
+import Auth from './pages/Auth';
+import Dashboard from './pages/Dashboard';
+import Project from './pages/Project';
+import {  Routes } from 'react-router-dom';
+import { Route } from 'react-router-dom';
+import Home from './pages/Home';
+import Header from './compontents/Header';
+import { useContext } from 'react';
+import { isAuthTokenContext } from './context/ContextShare';
+
 
 function App() {
+  const {isAuthToken, setisAuthToken}=useContext(isAuthTokenContext)
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+
+      <Routes>
+        <Route path='/' element={<Home/>}/>
+        <Route path='/login' element={<Auth/>}/>
+        <Route path='/register' element={<Auth register={"register"} />}/>
+        <Route path='/project' element={<Project />}/>
+        <Route path='/dashboard' element={isAuthToken?<Dashboard/>:<Home/>}/>
+
+      </Routes>
+      <Footer />
     </div>
+
   );
 }
 
